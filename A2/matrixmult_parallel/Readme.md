@@ -19,16 +19,16 @@ For example, running on these test files will output:
 $ ./matrixmult_parallel A.txt W.txt
 which will output to stdout:
 
-Result of A*W = [
-11  7 0 0 0 11 0 0 
-21 13 0 0 0 21 0 0 
-16 10 0 0 0 16 0 0 
-16 10 0 0 0 16 0 0 
-21 13 0 0 0 21 0 0 
-26 16 0 0 0 26 0 0 
-26 16 0 0 0 26 0 0 
-16 10 0 0 0 16 0 0 
-]
+* Result of A*W = [
+* 11  7 0 0 0 11 0 0 
+* 21 13 0 0 0 21 0 0 
+* 16 10 0 0 0 16 0 0 
+* 16 10 0 0 0 16 0 0 
+* 21 13 0 0 0 21 0 0 
+* 26 16 0 0 0 26 0 0 
+* 26 16 0 0 0 26 0 0 
+* 16 10 0 0 0 16 0 0 
+* ]
 Runtime 0.01 seconds
 (it is fine if you output additional details, like the absolute paths to A W. Actually it is better to output the full paths to your input files)
 The error codes are the same as in assignment 1, e.g., if an input file was inaccessible you should also print to stderr messages:
