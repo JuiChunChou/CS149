@@ -33,7 +33,7 @@ void compute_row(int row, int colum1, int colum2, int a[][colum1], int w[][colum
         }
         write(result_pipe[1], &sum, sizeof(int)); // Write the result to the pipe
     }
-    close(result_pipe[1]); // Close the write end of the pipe
+    close(result_pipe[1]); 
     exit(0);
 }
 
@@ -95,14 +95,14 @@ int main(int argc, char* argv[]) {
         }
         if (child_pid == 0) {
             // Child process computes a row
-            close(result_pipe[i][0]); // Close the read end of the pipe in the child process
+            close(result_pipe[i][0]); 
             compute_row(i, colum1, colum2, a, w, result_pipe[i]);
         }
     }
 
     // Parent process reads the results from child processes
     for (int i = 0; i < row1; i++) {
-        close(result_pipe[i][1]); // Close the write end of the pipe in the parent process
+        close(result_pipe[i][1]); 
     }
 
     printf("Result of A*W = \n");
