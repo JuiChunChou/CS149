@@ -1,1 +1,31 @@
+For this assignment you will build upon your Assgt3 code solution. Expand your Assgt3 to create a matrixmult_multiw_deep.c program. Your command-line arguments (argc/argv) are your one A matrix along with one or more W matrices (the command line arguments are the same as Assgt3). Following that on each line from stdin, you will get one or more new W matrices.
 
+You will create matrices of the same fixed 8x8 sizes (to keep things simple), zero them out and store the contents of the files (one line per row as in previous assignments, ignoring extra rows and extra columns beyond the given dimension of 8). Assume all numbers are nonnegative integers. You will zero-fill the matrix with 0s to start with as in the other assgts. If the rows or columns in the file are smaller or larger than the stated dimension you will ignore them. In other words, you will fill an array of the declared size with whatever exists in the file.
+
+ 
+
+See the example below. Given the command line arguments (argc/argv) you will do the same as Assgt3, which is to multiply A with all W arrays in children processes. Same as you did in Assgt3, you will use fork for the children and exec matrixmult_parallel (Assgt2, but modified a bit). Using exec is a requirement so you will reuse code from Assgt2 and run things in parallel.
+
+For a given line of input, the parent will receive the resulting R matrices back through pipes from the children, and sum them up position-wise into the Rsum matrix, which is also 8x8. The parent will receive the R matrices from all the children for a given line and sum them up into Rsum. Since you don't know how many W's you will get at each line, you will need to parse the W filenames in a line from stdin so each child can inherit its W filename like in Assgt3 (you can store the W filenames in a dynamically allocated array with malloc, or you might not use malloc - malloc isn't required by the rubric). 1 A child will inherit the index i when it is forked and will know which Wi filename corresponds to it.
+
+When the parent receives the next line of W filenames from stdin, matrixmult_multiw_deep will fork/spawn new children and will exec the Assgt2 code (matrixmult_parallel, but modified a bit), but the difference is that child i will use Rsum and Wi (instead of A and Wi). Thus, Rsum from the previous input line is multiplied by all input weight matrices W in child processes, and the results are returned to the parent to be summed position-wise and replace Rsum.
+
+When the parent receives the next line of W arrays from stdin, Rsum from the previous input line is multiplied by the new weight matrices W in forked child processes and the results are returned to the parent to replace Rsum.
+
+Thus, at each input line of W's from stdin you will compute in child processes that exec Assgt2 code: the product of Rsum from the previous line times all W's, send the Ri results back to the parent to sum up into a new Rsum=R1+R2+...; and that will be your input to the next line of Ws, which will again multiply Rsum from the previous layer with the W matrices.
+
+As in Assgt3, a process will also write the filenames of the input A and W matrices it receives to file "PID.out" (replace PID with getpid()).  It is OK if you show the full absolute path to each file, e.g. /home/.../A4/test/A1.txt (it is actually preferred this way). Each child process i does the same thing for a different Wi matrix. Clarification: The parent spawns a few children for the A and Ws on the cmd line and receives Rsum. Then parent spawns new children for the first line of stdin and receives the new Rsum. Then parent spawns new children for the second line of stdin and receives the new Rsum. The first child processes print A's and W's filepath to PID.out, and the consequent child processes just print out "Rsum" and W's filepath to PID.out. They don't need to print the values inside matrices of A.txt and W.txt. The parent prints only the final Rsum to stdout.
+
+Here is an example of running matrixmult_multiw_deep on A1.txt and eight W[1-8].txt weight files (using these test files, they are the same as Assgt1 plus five more W[4-8].txt):
+
+./matrixmult_multiw_deep A1.txt W1.txt W2.txt W3.txt
+
+W4.txt W5.txt W6.txt W7.txt 
+
+W8.txt
+....
+^D <--Ctrl-D is the EOF value, which terminates your input
+
+Rsum = [ 71350 54770 54770 54770 54770 54770 54770 97080 
+0 0 0 0 0 0 0 0
+...]
