@@ -1,0 +1,15 @@
+uichunchiu@Ubuntu22:~/CLionProjects/matrixmult_parallel$ ./matrixmult_parallel A.txt W.txt
+A is 9 row and 8 column
+W is 9 row and 8 column
+Result of A*W =
+11 7 0 0 0 11 0 0
+21 13 0 0 0 21 0 0
+16 10 0 0 0 16 0 0
+16 10 0 0 0 16 0 0
+21 13 0 0 0 21 0 0
+26 16 0 0 0 26 0 0
+26 16 0 0 0 26 0 0
+16 10 0 0 0 16 0 0
+1854309426 1503227957 0 0 0 1854309426 0 0
+juichunchiu@Ubuntu22:~/CLionProjects/matrixmult_parallel$ ./matrixmult_parallel A.txt C.txt
+Error opening files.
